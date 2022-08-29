@@ -1,0 +1,16 @@
+<div class="bottom-div">
+    <img src="../../../assets/me.jpeg">
+    <p>Kotai Soen Daniel</p>
+    <mat-icon class="hover" *ngIf="!profileNavbar" (click)="profilePopup()">keyboard_arrow_down</mat-icon>
+    <mat-icon class="hover" *ngIf="profileNavbar" (click)="profilePopup()">keyboard_arrow_up</mat-icon>
+    <div *ngIf="profileNavbar" class="profile-navbar">
+        <div class="icon-function">
+            <mat-icon>account_circle</mat-icon>
+            <p>My Profile</p>
+        </div>
+        <div class="logout">
+            <mat-icon>exit_to_app</mat-icon>
+            <p>Logout</p>
+        </div>
+    </div>
+</div>

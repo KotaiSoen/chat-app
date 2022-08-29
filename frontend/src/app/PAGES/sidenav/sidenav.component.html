@@ -1,0 +1,116 @@
+<div class="desktop" *ngIf="innerWidth > 767">
+    <div class="container" *ngIf="channel === ''">
+        <div class="top-div">
+            <p>Channels</p>
+            <mat-icon class="hover" (click)="addNewChannel()">add</mat-icon>
+        </div>
+        <div class="main-div">
+            <div class="search">
+                <mat-icon class="hover">search</mat-icon>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="channels hover" *ngFor="let channel of channels" (click)="channelName(channel)">
+                <p>{{ channel | channels | uppercase}}</p>
+                <p>{{ channel | uppercase }}</p>
+            </div>
+            <div class="modal-div" *ngIf="addChannel" (click)="removeAddChannel($event)">
+                <div class="modal">
+                    <p>NEW CHANNEL</p>
+                    <input type="text" placeholder="Channel name">
+                    <textarea placeholder="Channel name description"></textarea>
+                    <button>Save</button>
+                </div>
+            </div>
+        </div>
+        <app-profile-navbar></app-profile-navbar>
+    </div>
+    
+    
+    
+    <div class="container" *ngIf="channel !== ''">
+        <div class="top-div-channel">
+            <mat-icon class="hover" (click)="allChannels()">keyboard_arrow_left</mat-icon>
+            <p>All Channels</p>
+        </div>
+        <div class="main-div-channel">
+            <div>
+                <p>{{channel | uppercase}}</p>
+                <p>The toughest males you will find around the globe. We are tough to the core, both for our women and for ourselves</p>
+            </div>
+            <div class="members">
+                <p>MEMBERS</p>
+                <div class="members-info">
+                    <img src="../../../assets/me.jpeg">
+                    <p>Kotai Soen</p>
+                </div>
+                <div class="members-info">
+                    <img src="../../../assets/me.jpeg">
+                    <p>Kotai Soen</p>
+                </div>
+            </div>
+        </div>
+        <app-profile-navbar></app-profile-navbar>
+    </div>
+</div>
+
+
+<div class="mobile" *ngIf="innerWidth <= 767 && sideNav">
+
+    <div class="close">
+        <mat-icon class="hover" (click)="closeNav()">close</mat-icon>
+    </div>
+
+    <div class="container" *ngIf="channel === ''">
+        <div class="top-div">
+            <p>Channels</p>
+            <mat-icon class="hover" (click)="addNewChannel()">add</mat-icon>
+        </div>
+        <div class="main-div">
+            <div class="search">
+                <mat-icon class="hover">search</mat-icon>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="channels hover" *ngFor="let channel of channels" (click)="channelName(channel)">
+                <p>{{ channel | channels | uppercase}}</p>
+                <p>{{ channel | uppercase }}</p>
+            </div>
+            <div class="modal-div" *ngIf="addChannel" (click)="removeAddChannel($event)">
+                <div class="modal">
+                    <p>NEW CHANNEL</p>
+                    <input type="text" placeholder="Channel name">
+                    <textarea placeholder="Channel name description"></textarea>
+                    <button>Save</button>
+                </div>
+            </div>
+        </div>
+        <app-profile-navbar></app-profile-navbar>
+    </div>
+    
+    
+    
+    <div class="container" *ngIf="channel !== ''">
+        <div class="top-div-channel">
+            <mat-icon class="hover" (click)="allChannels()">keyboard_arrow_left</mat-icon>
+            <p>All Channels</p>
+        </div>
+        <div class="main-div-channel">
+            <div>
+                <p>{{channel | uppercase}}</p>
+                <p>The toughest males you will find around the globe. We are tough to the core, both for our women and for ourselves</p>
+            </div>
+            <div class="members">
+                <p>MEMBERS</p>
+                <div class="members-info">
+                    <img src="../../../assets/me.jpeg">
+                    <p>Kotai Soen</p>
+                </div>
+                <div class="members-info">
+                    <img src="../../../assets/me.jpeg">
+                    <p>Kotai Soen</p>
+                </div>
+            </div>
+        </div>
+        <app-profile-navbar></app-profile-navbar>
+    </div>
+
+</div>
