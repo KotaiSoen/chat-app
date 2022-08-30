@@ -1,4 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { Group } from 'src/app/MODELS/group';
+import { Message } from 'src/app/MODELS/message';
+import { ChatService } from 'src/app/SERVICES/chat.service';
 
 @Component({
   selector: 'app-messages',
@@ -14,34 +17,52 @@ export class MessagesComponent implements OnInit {
   onResize() {
     this.innerWidth = window.innerWidth;
   }
-  
-  chatName = 'front-end developers';
 
-  chats = [
-    {
-      name: 'Kotai',
-      date: 'yesterday at 4pm',
-      text: 'Hello bro, there\'s something that you should know about me. Tell me the truth about everything and you can go scott free. Don\'t lie to me. I will kill you if you do so'
-    },
-    {
-      name: 'Kotai Soen',
-      date: 'yesterday at 4pm',
-      text: 'Hello bro, there\'s something that you should know about me. Tell me the truth about everything and you can go scott free. Don\'t lie to me'
-    },
-  ]
+  chatName = '';
 
-  constructor() { }
+  channelId!: string;
+
+  chats: Message[] = [];
+
+  message: string = '';
+
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
+    if(localStorage.getItem('channelId') !== null) {
+      this.channelId = localStorage.getItem('channelId')!;
+      this.initializingPage(this.channelId);
+    }
   }
 
-  channelName(channelName: string) {
-    this.chatName = channelName;
+  initializingPage(channelId: string) {
+    this.chatService.oneChannel(channelId).subscribe((group) => {
+      this.chatName = group!.name;
+    })
+
+    this.chatService.getGroupMessages(channelId).subscribe((messages) => {
+      this.chats = messages;
+    })
+  }
+
+  channelName(channelId: string) {
+    localStorage.setItem('channelId', channelId);
+    this.channelId = channelId;
+    this.initializingPage(this.channelId);
   }
 
   openNav() {
     this.sideNav = !this.sideNav;
+  }
+
+  sendMessage() {
+    const sentAt = new Date();
+    const sentBy = 'Kotai';
+    const text = this.message;
+    const messageDetails = {sentAt, sentBy, text};
+    this.chatService.sendMessage(this.channelId, messageDetails);
+    this.message = '';
   }
 
 }

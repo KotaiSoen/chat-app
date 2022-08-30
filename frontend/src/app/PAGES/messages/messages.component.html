@@ -1,9 +1,6 @@
 <div class="container">
     <app-sidenav [sideNav]="sideNav" (sideNavEvent)="openNav()" (channelEvent)="channelName($event)"></app-sidenav>
-    <div class="empty-div" *ngIf="chatName === ''">
-        <h2>No Channel Has Been Selected!</h2>
-    </div>
-    <div class="main-div" *ngIf="chatName !== ''">
+    <div class="main-div">
         <div class="chat-name" *ngIf="innerWidth > 767">
             <p>{{chatName | uppercase}}</p>
         </div>
@@ -13,7 +10,10 @@
                 <p>{{chatName | uppercase}}</p>
             </div>
         </div>
-        <div class="chat-area">
+        <div class="empty-div" *ngIf="chatName === ''">
+            <h2>No Channel Has Been Selected!</h2>
+        </div>
+        <div class="chat-area" *ngIf="chatName !== ''">
             <div class="chats">
                 <div class="chat" *ngFor="let chat of chats">
                     <div class="dp">
@@ -21,16 +21,16 @@
                     </div>
                     <div class="name-date-text">
                         <div class="name-date">
-                            <p>{{chat.name}}</p>
-                            <p>{{chat.date}}</p>
+                            <p>{{chat.sentBy}}</p>
+                            <p>{{chat.sentAt.toDate() | date: 'medium'}}</p>
                         </div>
                         <p class="text">{{chat.text}}</p>
                     </div>
                 </div>
             </div>
             <div class="keyboard">
-                <textarea placeholder="Type a message here"></textarea>
-                <mat-icon class="hover">send</mat-icon>
+                <textarea placeholder="Type a message here" [(ngModel)]="message"></textarea>
+                <mat-icon class="hover" (click)="sendMessage()">send</mat-icon>
             </div>
         </div>
     </div>

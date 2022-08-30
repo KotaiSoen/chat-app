@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, HostListener, Input} from '@angular/core';
+import { Group } from 'src/app/MODELS/group';
+import { ChatService } from 'src/app/SERVICES/chat.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -21,21 +23,30 @@ export class SidenavComponent implements OnInit {
 
   @Output() sideNavEvent = new EventEmitter<boolean>();
 
-  channel: string = '';
+  channel!: Group;
+
+  openOneChannel = false;
 
   addChannel: boolean = false;
 
-  channels = ['alpha males', 'fast cars', 'bad bitches', 'girls', 'boys', 'alumini', 'engineers', 'full-stack developers', 'web designers', 'cloud engineers', 'front-end developers', 'back-end developers', 'redditors', 'bastards', 'broke fucks']
+  channels!: Group[];
 
-  constructor() { }
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
+
+    this.chatService.groups.subscribe((data) => {
+      this.channels = data;
+    })
   }
 
-  channelName(channel: string) {
-    this.channel = channel;
-    this.channelEvent.emit(channel);
+  channelId(channelId: string) {
+    this.chatService.oneChannel(channelId).subscribe((channel) => {
+      this.channel = channel!;
+      this.openOneChannel = true;
+    })
+    this.channelEvent.emit(channelId);
   }
 
   addNewChannel() {
@@ -49,11 +60,18 @@ export class SidenavComponent implements OnInit {
   }
 
   allChannels() {
-    this.channel = '';
+    this.openOneChannel = false;
   }
 
   closeNav() {
     this.sideNavEvent.emit();
+  }
+
+  createNewChannel(name: string, description: string) {
+    const createdAt = new Date();
+    const createdBy = 'Kotai'
+    const group = {name, description, createdBy, createdAt};
+    this.chatService.createChannel(group);
   }
 
 }

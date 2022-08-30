@@ -110,6 +110,11 @@
     font-size: 12px;
 }
 
+.main-div-channel p:nth-child(3) {
+    margin-top: 15px;
+    font-size: 12px;
+}
+
 .search {
     display: flex;
     background: #3C393F;

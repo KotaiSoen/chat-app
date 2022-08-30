@@ -1,5 +1,5 @@
 <div class="desktop" *ngIf="innerWidth > 767">
-    <div class="container" *ngIf="channel === ''">
+    <div class="container" *ngIf="!openOneChannel">
         <div class="top-div">
             <p>Channels</p>
             <mat-icon class="hover" (click)="addNewChannel()">add</mat-icon>
@@ -9,16 +9,16 @@
                 <mat-icon class="hover">search</mat-icon>
                 <input type="text" placeholder="Search">
             </div>
-            <div class="channels hover" *ngFor="let channel of channels" (click)="channelName(channel)">
-                <p>{{ channel | channels | uppercase}}</p>
-                <p>{{ channel | uppercase }}</p>
+            <div class="channels hover" *ngFor="let channel of channels" (click)="channelId(channel.id!)">
+                <p>{{ channel.name | channels | uppercase}}</p>
+                <p>{{ channel.name | uppercase }}</p>
             </div>
             <div class="modal-div" *ngIf="addChannel" (click)="removeAddChannel($event)">
                 <div class="modal">
                     <p>NEW CHANNEL</p>
-                    <input type="text" placeholder="Channel name">
-                    <textarea placeholder="Channel name description"></textarea>
-                    <button>Save</button>
+                    <input type="text" placeholder="Channel name" #channelName>
+                    <textarea placeholder="Channel name description" #channelDescription></textarea>
+                    <button (click)="createNewChannel(channelName.value, channelDescription.value)">Save</button>
                 </div>
             </div>
         </div>
@@ -27,15 +27,16 @@
     
     
     
-    <div class="container" *ngIf="channel !== ''">
+    <div class="container" *ngIf="openOneChannel">
         <div class="top-div-channel">
             <mat-icon class="hover" (click)="allChannels()">keyboard_arrow_left</mat-icon>
             <p>All Channels</p>
         </div>
         <div class="main-div-channel">
             <div>
-                <p>{{channel | uppercase}}</p>
-                <p>The toughest males you will find around the globe. We are tough to the core, both for our women and for ourselves</p>
+                <p>{{channel.name | uppercase}}</p>
+                <p>Created by {{channel.createdBy}} on {{channel.createdAt.toDate() | date: 'medium'}}</p>
+                <p>{{channel.description}}</p>
             </div>
             <div class="members">
                 <p>MEMBERS</p>
@@ -60,7 +61,7 @@
         <mat-icon class="hover" (click)="closeNav()">close</mat-icon>
     </div>
 
-    <div class="container" *ngIf="channel === ''">
+    <div class="container" *ngIf="!openOneChannel">
         <div class="top-div">
             <p>Channels</p>
             <mat-icon class="hover" (click)="addNewChannel()">add</mat-icon>
@@ -70,16 +71,16 @@
                 <mat-icon class="hover">search</mat-icon>
                 <input type="text" placeholder="Search">
             </div>
-            <div class="channels hover" *ngFor="let channel of channels" (click)="channelName(channel)">
-                <p>{{ channel | channels | uppercase}}</p>
-                <p>{{ channel | uppercase }}</p>
+            <div class="channels hover" *ngFor="let channel of channels" (click)="channelId(channel.id!)">
+                <p>{{ channel.name | channels | uppercase}}</p>
+                <p>{{ channel.name | uppercase }}</p>
             </div>
             <div class="modal-div" *ngIf="addChannel" (click)="removeAddChannel($event)">
                 <div class="modal">
                     <p>NEW CHANNEL</p>
-                    <input type="text" placeholder="Channel name">
-                    <textarea placeholder="Channel name description"></textarea>
-                    <button>Save</button>
+                    <input type="text" placeholder="Channel name" #channelName>
+                    <textarea placeholder="Channel name description" #channelDescription></textarea>
+                    <button (click)="createNewChannel(channelName.value, channelDescription.value)">Save</button>
                 </div>
             </div>
         </div>
@@ -88,15 +89,16 @@
     
     
     
-    <div class="container" *ngIf="channel !== ''">
+    <div class="container" *ngIf="openOneChannel">
         <div class="top-div-channel">
             <mat-icon class="hover" (click)="allChannels()">keyboard_arrow_left</mat-icon>
             <p>All Channels</p>
         </div>
         <div class="main-div-channel">
             <div>
-                <p>{{channel | uppercase}}</p>
-                <p>The toughest males you will find around the globe. We are tough to the core, both for our women and for ourselves</p>
+                <p>{{channel.name | uppercase}}</p>
+                <p>Created by {{channel.createdBy}} on {{channel.createdAt.toDate() | date: 'medium'}}</p>
+                <p>{{channel.description}}</p>
             </div>
             <div class="members">
                 <p>MEMBERS</p>

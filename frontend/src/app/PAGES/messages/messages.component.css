@@ -7,6 +7,7 @@
 
 .empty-div {
     color: #E0E0E0;
+    height: 92%;
     width: 100%;
     display: flex;
     justify-content: center;

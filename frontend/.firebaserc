@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "chat-app-905f6": {
+      "hosting": {
+        "frontend": [
+          "chat-app-905f6"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "chat-app-905f6"
+  }
+}
