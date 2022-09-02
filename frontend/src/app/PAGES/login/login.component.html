@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="main-box">
+        <p class="register">Login!</p>
+        <div>
+            <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+                <div class="input-box">
+                    <mat-icon class="mat-email">email</mat-icon>
+                    <input type="email" placeholder="Email" formControlName="email">
+                </div>
+                <div class="input-box password">
+                    <mat-icon class="mat-password">lock</mat-icon>
+                    <input type="password" placeholder="Password" formControlName="password">
+                </div>
+                <button class="start-coding hover" type="submit">Login</button>
+            </form>
+        </div>
+        <div class="social-profile">
+            <p class="or-continue">or continue with Google</p>
+            <div class="social-images">
+                <img class="hover" (click)="googleLogin()" src="../../../assets/Google.svg">
+            </div>
+        </div>
+        <p class="already-member">Not yet a member? <span class="hover" routerLink="/register">Register</span></p>
+    </div>
+</div>

@@ -9,7 +9,7 @@
                 <mat-icon class="hover">search</mat-icon>
                 <input type="text" placeholder="Search">
             </div>
-            <div class="channels hover" *ngFor="let channel of channels" (click)="channelId(channel.id!)">
+            <div class="channels hover" *ngFor="let channel of channels" [routerLink]="['/messages', channel.id]" (click)="channelId(channel.id!)">
                 <p>{{ channel.name | channels | uppercase}}</p>
                 <p>{{ channel.name | uppercase }}</p>
             </div>
@@ -25,33 +25,7 @@
         <app-profile-navbar></app-profile-navbar>
     </div>
     
-    
-    
-    <div class="container" *ngIf="openOneChannel">
-        <div class="top-div-channel">
-            <mat-icon class="hover" (click)="allChannels()">keyboard_arrow_left</mat-icon>
-            <p>All Channels</p>
-        </div>
-        <div class="main-div-channel">
-            <div>
-                <p>{{channel.name | uppercase}}</p>
-                <p>Created by {{channel.createdBy}} on {{channel.createdAt.toDate() | date: 'medium'}}</p>
-                <p>{{channel.description}}</p>
-            </div>
-            <div class="members">
-                <p>MEMBERS</p>
-                <div class="members-info">
-                    <img src="../../../assets/me.jpeg">
-                    <p>Kotai Soen</p>
-                </div>
-                <div class="members-info">
-                    <img src="../../../assets/me.jpeg">
-                    <p>Kotai Soen</p>
-                </div>
-            </div>
-        </div>
-        <app-profile-navbar></app-profile-navbar>
-    </div>
+    <app-sidenav-onegroup *ngIf="openOneChannel" (allChannelsEvent)="allChannels()"></app-sidenav-onegroup>
 </div>
 
 
@@ -71,7 +45,7 @@
                 <mat-icon class="hover">search</mat-icon>
                 <input type="text" placeholder="Search">
             </div>
-            <div class="channels hover" *ngFor="let channel of channels" (click)="channelId(channel.id!)">
+            <div class="channels hover" *ngFor="let channel of channels" [routerLink]="['/messages', channel.id]" (click)="channelId(channel.id!)">
                 <p>{{ channel.name | channels | uppercase}}</p>
                 <p>{{ channel.name | uppercase }}</p>
             </div>
@@ -86,33 +60,6 @@
         </div>
         <app-profile-navbar></app-profile-navbar>
     </div>
-    
-    
-    
-    <div class="container" *ngIf="openOneChannel">
-        <div class="top-div-channel">
-            <mat-icon class="hover" (click)="allChannels()">keyboard_arrow_left</mat-icon>
-            <p>All Channels</p>
-        </div>
-        <div class="main-div-channel">
-            <div>
-                <p>{{channel.name | uppercase}}</p>
-                <p>Created by {{channel.createdBy}} on {{channel.createdAt.toDate() | date: 'medium'}}</p>
-                <p>{{channel.description}}</p>
-            </div>
-            <div class="members">
-                <p>MEMBERS</p>
-                <div class="members-info">
-                    <img src="../../../assets/me.jpeg">
-                    <p>Kotai Soen</p>
-                </div>
-                <div class="members-info">
-                    <img src="../../../assets/me.jpeg">
-                    <p>Kotai Soen</p>
-                </div>
-            </div>
-        </div>
-        <app-profile-navbar></app-profile-navbar>
-    </div>
 
+    <app-sidenav-onegroup *ngIf="openOneChannel" (allChannelsEvent)="allChannels()"></app-sidenav-onegroup>
 </div>

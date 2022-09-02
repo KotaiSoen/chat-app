@@ -1,0 +1,9 @@
+<div class="container">
+    <app-sidenav [sideNav]="sideNav" (sideNavEvent)="openNav()"></app-sidenav>
+    <div class="main-div">
+        <app-top-nav (sideNavEvent)="openNav()"></app-top-nav>
+        <div class="empty-div">
+            <p>No Channel Has Been Selected!</p>
+        </div>
+    </div>
+</div>

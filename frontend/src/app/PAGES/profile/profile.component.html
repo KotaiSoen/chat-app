@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="main-div">
+        <div class="back hover" (click)="goBack()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            <p>Back</p>
+        </div>
+        <div class="settings">
+            <div class="username">
+                <p>Change your username:</p>
+                <input type="text" #username>
+            </div>
+            <div class="profile-picture">
+                <p>Change your profile picture:</p>
+                <label for="background-image" class="hover"><mat-icon>add_a_photo</mat-icon></label>
+                <input type="file" id="background-image" (change)="changeUserPhoto($event)">
+            </div>
+            <button mat-raised-button color="primary" (click)="changeUsername(username.value)">Submit</button>
+        </div>
+    </div>
+</div>

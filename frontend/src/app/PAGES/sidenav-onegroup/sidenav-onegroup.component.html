@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="top-div-channel">
+        <mat-icon class="hover" (click)="allChannels()">keyboard_arrow_left</mat-icon>
+        <p>All Channels</p>
+    </div>
+    <div class="main-div-channel">
+        <div>
+            <p>{{channel?.name | uppercase}}</p>
+            <p>Created by {{channel?.createdBy}} on {{channel?.createdAt.toDate() | date: 'medium'}}</p>
+            <p>{{channel?.description}}</p>
+        </div>
+        <div class="members">
+            <p>MEMBERS</p>
+            <div class="members-info" *ngFor="let member of members">
+                <img src={{member?.imageUrl}}>
+                <p>{{member?.name}}</p>
+            </div>
+        </div>
+    </div>
+    <app-profile-navbar></app-profile-navbar>
+</div>

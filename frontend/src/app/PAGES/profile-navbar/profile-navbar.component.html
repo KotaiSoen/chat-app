@@ -1,14 +1,14 @@
 <div class="bottom-div">
-    <img src="../../../assets/me.jpeg">
-    <p>Kotai Soen Daniel</p>
+    <img src={{user?.imageUrl}}>
+    <p>{{user?.name}}</p>
     <mat-icon class="hover" *ngIf="!profileNavbar" (click)="profilePopup()">keyboard_arrow_down</mat-icon>
     <mat-icon class="hover" *ngIf="profileNavbar" (click)="profilePopup()">keyboard_arrow_up</mat-icon>
     <div *ngIf="profileNavbar" class="profile-navbar">
-        <div class="icon-function">
+        <div class="icon-function hover" routerLink="/profile">
             <mat-icon>account_circle</mat-icon>
             <p>My Profile</p>
         </div>
-        <div class="logout">
+        <div class="logout hover" (click)="logout()">
             <mat-icon>exit_to_app</mat-icon>
             <p>Logout</p>
         </div>

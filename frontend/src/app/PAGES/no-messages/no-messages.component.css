@@ -1,0 +1,24 @@
+.container {
+    background: #333333;
+    width: 100%;
+    height: 100%; 
+    display: flex; 
+}
+
+.main-div {
+    width: 100%;
+}
+
+.empty-div {
+    color: #E0E0E0;
+    height: 92%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    font-size: 22px;
+    font-weight: 700;
+}

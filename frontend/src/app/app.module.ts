@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,12 @@ import { ProfileNavbarComponent } from './PAGES/profile-navbar/profile-navbar.co
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { RegisterComponent } from './PAGES/register/register.component';
+import { LoginComponent } from './PAGES/login/login.component';
+import { SidenavOnegroupComponent } from './PAGES/sidenav-onegroup/sidenav-onegroup.component';
+import { NoMessagesComponent } from './PAGES/no-messages/no-messages.component';
+import { TopNavComponent } from './PAGES/top-nav/top-nav.component';
+import { ProfileComponent } from './PAGES/profile/profile.component';
 
 
 @NgModule({
@@ -22,14 +29,22 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     SidenavComponent,
     ChannelsPipe,
     MessagesComponent,
-    ProfileNavbarComponent
+    ProfileNavbarComponent,
+    RegisterComponent,
+    LoginComponent,
+    SidenavOnegroupComponent,
+    NoMessagesComponent,
+    TopNavComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
+    MatButtonModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
   ],

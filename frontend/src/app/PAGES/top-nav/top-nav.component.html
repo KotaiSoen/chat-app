@@ -1,0 +1,11 @@
+<div class="main-div">
+    <div class="chat-name" *ngIf="innerWidth > 767" >
+        <p>{{chatName | uppercase}}</p>
+    </div>
+    <div class="chat-name" *ngIf="innerWidth <= 767">
+        <div class="open-name">
+            <mat-icon (click)="openNav()" class="hover">menu</mat-icon>
+            <p>{{chatName | uppercase}}</p>
+        </div>
+    </div>
+</div>

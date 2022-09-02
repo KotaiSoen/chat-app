@@ -1,19 +1,8 @@
 <div class="container">
-    <app-sidenav [sideNav]="sideNav" (sideNavEvent)="openNav()" (channelEvent)="channelName($event)"></app-sidenav>
+    <app-sidenav [sideNav]="sideNav" (sideNavEvent)="openNav()"></app-sidenav>
     <div class="main-div">
-        <div class="chat-name" *ngIf="innerWidth > 767">
-            <p>{{chatName | uppercase}}</p>
-        </div>
-        <div class="chat-name" *ngIf="innerWidth <= 767">
-            <div class="open-name">
-                <mat-icon (click)="openNav()" class="hover">menu</mat-icon>
-                <p>{{chatName | uppercase}}</p>
-            </div>
-        </div>
-        <div class="empty-div" *ngIf="chatName === ''">
-            <h2>No Channel Has Been Selected!</h2>
-        </div>
-        <div class="chat-area" *ngIf="chatName !== ''">
+        <app-top-nav (sideNavEvent)="openNav()"></app-top-nav>
+        <div class="chat-area">
             <div class="chats">
                 <div class="chat" *ngFor="let chat of chats">
                     <div class="dp">

@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="main-box">
+        <p class="register">Register!</p>
+        <div>
+            <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+                <div class="input-box">
+                    <mat-icon class="mat-email">email</mat-icon>
+                    <input type="email" placeholder="Email" formControlName="email">
+                </div>
+                <div class="input-box password">
+                    <mat-icon class="mat-password">lock</mat-icon>
+                    <input type="password" placeholder="Password" formControlName="password">
+                </div>
+                <button class="start-coding hover" type="submit">Register</button>
+            </form>
+        </div>
+        <p class="already-member">Already a member? <span class="hover" routerLink="/login">Login</span></p>
+    </div>
+</div>

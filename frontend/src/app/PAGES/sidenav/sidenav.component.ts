@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, HostListener, Input} from '@angular/core';
 import { Group } from 'src/app/MODELS/group';
+import { User } from 'src/app/MODELS/user';
+import { AuthService } from 'src/app/SERVICES/auth.service';
 import { ChatService } from 'src/app/SERVICES/chat.service';
 
 @Component({
@@ -31,7 +33,7 @@ export class SidenavComponent implements OnInit {
 
   channels!: Group[];
 
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
@@ -41,12 +43,13 @@ export class SidenavComponent implements OnInit {
     })
   }
 
-  channelId(channelId: string) {
-    this.chatService.oneChannel(channelId).subscribe((channel) => {
-      this.channel = channel!;
-      this.openOneChannel = true;
+  async channelId(channelId: string) {
+     await this.authService.getCurrentUser().then(result => {
+      const uid = result!.uid;
+      this.chatService.addMemberToGroup(channelId, uid);
     })
-    this.channelEvent.emit(channelId);
+    this.openOneChannel = true;
+
   }
 
   addNewChannel() {
@@ -72,6 +75,9 @@ export class SidenavComponent implements OnInit {
     const createdBy = 'Kotai'
     const group = {name, description, createdBy, createdAt};
     this.chatService.createChannel(group);
+    this.addChannel = false;
   }
+
+  
 
 }
