@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, HostListener, Input} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener, Input } from '@angular/core';
 import { Group } from 'src/app/MODELS/group';
 import { User } from 'src/app/MODELS/user';
 import { AuthService } from 'src/app/SERVICES/auth.service';
@@ -44,7 +44,7 @@ export class SidenavComponent implements OnInit {
   }
 
   async channelId(channelId: string) {
-     await this.authService.getCurrentUser().then(result => {
+    await this.authService.getCurrentUser().then(result => {
       const uid = result!.uid;
       this.chatService.addMemberToGroup(channelId, uid);
     })
@@ -57,7 +57,7 @@ export class SidenavComponent implements OnInit {
   }
 
   removeAddChannel(event: any) {
-    if(event.target.className === "modal-div") {
+    if (event.target.className === "modal-div") {
       this.addChannel = false;
     }
   }
@@ -70,14 +70,20 @@ export class SidenavComponent implements OnInit {
     this.sideNavEvent.emit();
   }
 
-  createNewChannel(name: string, description: string) {
-    const createdAt = new Date();
-    const createdBy = 'Kotai'
-    const group = {name, description, createdBy, createdAt};
-    this.chatService.createChannel(group);
-    this.addChannel = false;
+  async createNewChannel(name: string, description: string) {
+    this.authService.getCurrentUser().then(result => {
+      const uid = result!.uid;
+      this.chatService.getUserData(uid).subscribe(user => {
+        const createdBy = user!.name;
+        const createdAt = new Date();
+        const group = { name, description, createdBy, createdAt };
+        this.chatService.createChannel(group);
+        this.addChannel = false;
+      })
+    })
+
   }
 
-  
+
 
 }
