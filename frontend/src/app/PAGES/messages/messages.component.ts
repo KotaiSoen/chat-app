@@ -58,11 +58,14 @@ export class MessagesComponent implements OnInit {
     })
 
     this.authService.getCurrentUser().then((user: any) => {
-      this.user = user;
+      this.chatService.getUserData(user.uid).subscribe((user) => {
+        this.user = user!;
+      })
     })
   }
 
   sendMessage() {
+    console.log(this.user);
     const sentAt = new Date();
     const sentBy = this.user.name;
     const text = this.message;
