@@ -55,6 +55,7 @@ export class MessagesComponent implements OnInit {
 
     this.chatService.getGroupMessages(channelId).subscribe((messages) => {
       this.chats = messages;
+
     })
 
     this.authService.getCurrentUser().then((user: any) => {
@@ -69,7 +70,8 @@ export class MessagesComponent implements OnInit {
     const sentAt = new Date();
     const sentBy = this.user.name;
     const text = this.message;
-    const messageDetails = { sentAt, sentBy, text };
+    const imageUrl = this.user.imageUrl!;
+    const messageDetails = { sentAt, sentBy, text, imageUrl };
     this.chatService.sendMessage(this.channelId, messageDetails);
     this.message = '';
   }
