@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Group } from 'src/app/MODELS/group';
 import { Message } from 'src/app/MODELS/message';
+import { User } from 'src/app/MODELS/user';
+import { AuthService } from 'src/app/SERVICES/auth.service';
 import { ChatService } from 'src/app/SERVICES/chat.service';
 
 @Component({
@@ -28,7 +30,9 @@ export class MessagesComponent implements OnInit {
 
   message: string = '';
 
-  constructor(private chatService: ChatService, private route: ActivatedRoute) { }
+  user!: User;
+
+  constructor(private chatService: ChatService, private route: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
@@ -52,11 +56,15 @@ export class MessagesComponent implements OnInit {
     this.chatService.getGroupMessages(channelId).subscribe((messages) => {
       this.chats = messages;
     })
+
+    this.authService.getCurrentUser().then((user: any) => {
+      this.user = user;
+    })
   }
 
   sendMessage() {
     const sentAt = new Date();
-    const sentBy = 'Kotai';
+    const sentBy = this.user.name;
     const text = this.message;
     const messageDetails = { sentAt, sentBy, text };
     this.chatService.sendMessage(this.channelId, messageDetails);
