@@ -66,14 +66,15 @@ export class MessagesComponent implements OnInit {
   }
 
   sendMessage() {
-    console.log(this.user);
-    const sentAt = new Date();
-    const sentBy = this.user.name;
-    const text = this.message;
-    const imageUrl = this.user.imageUrl!;
-    const messageDetails = { sentAt, sentBy, text, imageUrl };
-    this.chatService.sendMessage(this.channelId, messageDetails);
-    this.message = '';
+    if(this.message != '') {
+      const sentAt = new Date();
+      const sentBy = this.user.name;
+      const text = this.message;
+      const imageUrl = this.user.imageUrl!;
+      const messageDetails = { sentAt, sentBy, text, imageUrl };
+      this.chatService.sendMessage(this.channelId, messageDetails);
+      this.message = '';
+    }
   }
 
 }
