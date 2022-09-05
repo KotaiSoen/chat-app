@@ -27,7 +27,7 @@ export class TopNavComponent implements OnInit {
     this.route.params.subscribe((params) => {
       if(params) {
         this.chatService.oneChannel(params['id']).subscribe((group) => {
-          this.chatName = group!.name;
+          this.chatName = group?.name!;
         })
       }
       

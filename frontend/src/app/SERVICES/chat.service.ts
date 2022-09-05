@@ -18,13 +18,13 @@ export class ChatService {
   private usersCollection!: AngularFirestoreCollection<User>;
   users!: Observable<User[]>;
 
-  constructor(private afs: AngularFirestore, private storage: AngularFireStorage) { 
+  constructor(private afs: AngularFirestore, private storage: AngularFireStorage) {
     this.groupCollection = afs.collection<Group>('groups');
     this.groups = this.groupCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Group;
         const id = a.payload.doc.id;
-        return { id, ...data};
+        return { id, ...data };
       }))
     )
 
@@ -45,7 +45,7 @@ export class ChatService {
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Message;
         const id = a.payload.doc.id;
-        return { id, ...data};
+        return { id, ...data };
       }))
     )
   }
@@ -57,13 +57,13 @@ export class ChatService {
   saveUser(user: User) {
     this.afs.doc<User>(`users/${user.uid}`).set(user);
   }
- 
+
   getUserData(uid: string) {
     return this.afs.doc<User>(`users/${uid}`).valueChanges();
   }
 
   changeUserUsername(uid: string, username: string) {
-    this.afs.doc<User>(`users/${uid}`).update({name: username});
+    this.afs.doc<User>(`users/${uid}`).update({ name: username });
     window.alert('Username successfully changed');
   }
 
@@ -71,9 +71,9 @@ export class ChatService {
     const file = event.target.files[0];
     const filePath = `users/${uid}`;
     const fileRef = this.storage.ref(filePath);
-    const task =  await this.storage.upload(filePath, file);
+    const task = await this.storage.upload(filePath, file);
     const downloadUrl = await fileRef.getDownloadURL().toPromise();
-    this.afs.doc<User>(`users/${uid}`).update({imageUrl: downloadUrl});
+    this.afs.doc<User>(`users/${uid}`).update({ imageUrl: downloadUrl });
     window.alert('Profile picture successfully updated')
   }
 
@@ -81,17 +81,17 @@ export class ChatService {
     let members: string[] = [];
     this.afs.doc<Group>(`groups/${channelId}`).valueChanges().subscribe((result) => {
       let groupMembers = result!.members!;
-      if(groupMembers) {
+      if (groupMembers) {
         members = groupMembers;
-        if(!members.includes(uid)) {
+        if (!members.includes(uid)) {
           console.log(members);
           members.push(uid);
-          this.afs.doc<Group>(`groups/${channelId}`).update({members: members});
+          this.afs.doc<Group>(`groups/${channelId}`).update({ members: members });
         }
       } else {
         members.push(uid);
-        this.afs.doc<Group>(`groups/${channelId}`).update({members: members});
-      }  
+        this.afs.doc<Group>(`groups/${channelId}`).update({ members: members });
+      }
     })
   }
 }

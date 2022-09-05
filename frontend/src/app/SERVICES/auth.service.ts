@@ -21,7 +21,7 @@ export class AuthService {
       const uid = result.user!.uid!;
       const email = result.user!.email!;
       const name = email.match(/^[^@]*/)![0];
-      const user = {imageUrl, uid, name};
+      const user = { imageUrl, uid, name };
       this.chatService.saveUser(user);
       this.router.navigate(['/login']);
     }).catch((error) => {
@@ -39,13 +39,20 @@ export class AuthService {
 
   googleLogin() {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((result) => {
-      console.log('you have successfully logged in')
-      const imageUrl = result.user!.photoURL!;
-      const uid = result.user!.uid!;
-      const name = result.user!.displayName!;
-      const user = {imageUrl, uid, name};
-      this.chatService.saveUser(user);
-      this.router.navigate(['/no-messages']);
+      console.log('you have successfully logged in');
+      this.chatService.users.subscribe(users => {
+        if (!users.some(user => user.uid === result.user!.uid!)) {
+          const imageUrl = result.user!.photoURL!;
+          const uid = result.user!.uid!;
+          const name = result.user!.displayName!;
+          const user = { imageUrl, uid, name };
+          this.chatService.saveUser(user);
+          this.router.navigate(['/no-messages']);
+        } else {
+          this.router.navigate(['/no-messages']);
+        }
+      })
+
     }).catch((error) => {
       window.alert(error);
     });
@@ -56,7 +63,6 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.clear();
     this.auth.signOut().then(() => {
       this.router.navigate(['/login']);
     });
