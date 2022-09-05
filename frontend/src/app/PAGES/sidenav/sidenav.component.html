@@ -6,10 +6,16 @@
         </div>
         <div class="main-div">
             <div class="search">
-                <mat-icon class="hover">search</mat-icon>
-                <input type="text" placeholder="Search">
+                <mat-icon class="hover" (click)="searchForChannel()">search</mat-icon>
+                <input type="text" placeholder="Search" [formControl]="search" [matAutocomplete]="auto">
+                <mat-autocomplete [displayWith]="getOptionText" #auto="matAutocomplete" class="mat-autocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option" class="mat-option" (click)="searchForChannel()">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
             </div>
-            <div class="channels hover" *ngFor="let channel of channels" [routerLink]="['/messages', channel.id]" (click)="channelId(channel.id!)">
+            <div class="channels hover" *ngFor="let channel of channels" [routerLink]="['/messages', channel.id]"
+                (click)="channelId(channel.id!)">
                 <p>{{ channel.name | channels | uppercase}}</p>
                 <p>{{ channel.name | uppercase }}</p>
             </div>
@@ -18,13 +24,14 @@
                     <p>NEW CHANNEL</p>
                     <input type="text" placeholder="Channel name" #channelName>
                     <textarea placeholder="Channel name description" #channelDescription></textarea>
-                    <button (click)="createNewChannel(channelName.value, channelDescription.value)" class="hover">Save</button>
+                    <button (click)="createNewChannel(channelName.value, channelDescription.value)"
+                        class="hover">Save</button>
                 </div>
             </div>
         </div>
         <app-profile-navbar></app-profile-navbar>
     </div>
-    
+
     <app-sidenav-onegroup *ngIf="openOneChannel" (allChannelsEvent)="allChannels()"></app-sidenav-onegroup>
 </div>
 
@@ -42,10 +49,16 @@
         </div>
         <div class="main-div">
             <div class="search">
-                <mat-icon class="hover">search</mat-icon>
-                <input type="text" placeholder="Search">
+                <mat-icon class="hover" (click)="searchForChannel()">search</mat-icon>
+                <input type="text" placeholder="Search" [formControl]="search" [matAutocomplete]="auto">
+                <mat-autocomplete [displayWith]="getOptionText" #auto="matAutocomplete" class="mat-autocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option" class="mat-option" (click)="searchForChannel()">
+                        <p>{{option}}</p>
+                    </mat-option>
+                </mat-autocomplete>
             </div>
-            <div class="channels hover" *ngFor="let channel of channels" [routerLink]="['/messages', channel.id]" (click)="channelId(channel.id!)">
+            <div class="channels hover" *ngFor="let channel of channels" [routerLink]="['/messages', channel.id]"
+                (click)="channelId(channel.id!)">
                 <p>{{ channel.name | channels | uppercase}}</p>
                 <p>{{ channel.name | uppercase }}</p>
             </div>
@@ -54,7 +67,8 @@
                     <p>NEW CHANNEL</p>
                     <input type="text" placeholder="Channel name" #channelName>
                     <textarea placeholder="Channel name description" #channelDescription></textarea>
-                    <button (click)="createNewChannel(channelName.value, channelDescription.value)" class="hover">Save</button>
+                    <button (click)="createNewChannel(channelName.value, channelDescription.value)"
+                        class="hover">Save</button>
                 </div>
             </div>
         </div>

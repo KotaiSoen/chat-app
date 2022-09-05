@@ -40,6 +40,16 @@ export class ChatService {
     return this.afs.doc<Group>(`groups/${id}`).valueChanges();
   }
 
+  searchOneChannel(group: string) {
+    return this.afs.collection('groups', ref => ref.where('name', '==', `${group}`)).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Group;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    )
+  }
+
   getGroupMessages(id: string) {
     return this.afs.doc<string>(`message/${id}`).collection<Message>('messages', ref => ref.orderBy('sentAt', 'asc')).snapshotChanges().pipe(
       map(actions => actions.map(a => {

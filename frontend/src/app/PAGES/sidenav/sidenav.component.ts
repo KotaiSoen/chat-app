@@ -1,5 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, HostListener, Input, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { groupCollapsed } from 'console';
+import { Observable, Subscription } from 'rxjs';
+import { map, startWith, take } from 'rxjs/operators';
 import { Group } from 'src/app/MODELS/group';
 import { User } from 'src/app/MODELS/user';
 import { AuthService } from 'src/app/SERVICES/auth.service';
@@ -36,7 +40,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
 
-  constructor(private chatService: ChatService, private authService: AuthService) { }
+  search = new FormControl();
+
+  filteredOptions!: Observable<string[]>;
+
+  constructor(private chatService: ChatService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
@@ -44,6 +52,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.chatService.groups.subscribe((data) => {
       this.channels = data;
     })
+
+    this.filteredOptions = this.search.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
   }
 
   async channelId(channelId: string) {
@@ -75,8 +88,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   createNewChannel(name: string, description: string) {
     const lowerCaseArray = this.channels.map(group => group.name.toLowerCase());
-    if(!lowerCaseArray.includes(name.toLowerCase())) {
-      if(name !== '' && description !== '') {
+    if (!lowerCaseArray.includes(name.toLowerCase())) {
+      if (name !== '' && description !== '') {
         this.authService.getCurrentUser().then(result => {
           const uid = result!.uid;
           this.subscription = this.chatService.getUserData(uid).subscribe(user => {
@@ -96,10 +109,34 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   }
 
+  searchForChannel() {
+    const searchLowercase = this.search.value.toLowerCase();
+    const channel = this.channels.map(channel => channel.name.toLowerCase());
+    if (searchLowercase !== '' && channel.includes(searchLowercase)) {
+      this.chatService.searchOneChannel(searchLowercase).pipe(take(1)).subscribe((group) => {
+        const id = group[0].id;
+        this.router.navigate(['/messages', id])
+        this.search.reset();
+      })
+    }
+  }
+
+  getOptionText(option: any) {
+    return option ? option : undefined;
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    const options = this.channels?.map(channel => channel.name);
+
+    return options?.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
   ngOnDestroy() {
-    if(this.subscription) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
-    }  
+    }
   }
 
 

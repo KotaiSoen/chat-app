@@ -38,10 +38,11 @@ export class MessagesComponent implements OnInit {
     this.innerWidth = window.innerWidth;
 
     this.route.params.subscribe((params) => {
-      this.channelId = params['id'];
-      this.initializingPage(this.channelId);
+      if (params) {
+        this.channelId = params['id'];
+        this.initializingPage(this.channelId);
+      }
     })
-
   }
 
   openNav() {
@@ -66,7 +67,7 @@ export class MessagesComponent implements OnInit {
   }
 
   sendMessage() {
-    if(this.message != '') {
+    if (this.message != '') {
       const sentAt = new Date();
       const sentBy = this.user.name;
       const text = this.message;

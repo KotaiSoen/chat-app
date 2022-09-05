@@ -23,26 +23,27 @@ export class SidenavOnegroupComponent implements OnInit {
   constructor(private route: ActivatedRoute, private chatService: ChatService) { }
 
   ngOnInit(): void {
-  
-    this.route.params.pipe(take(1)).subscribe((params) => {
 
-      if(params) {
-        console.log('params is the issue')
-        this.chatService.oneChannel(params['id']).subscribe((channel) => {
-          console.log('subscription is still going');
+    this.route.params.pipe(take(1)).subscribe((params) => {
+      if (params) {
+        this.subscription = this.chatService.oneChannel(params['id']).subscribe((channel) => {
           this.channel = channel!;
-          for(let i = 0; i < this.channel.members!.length; i++) {
-            this.chatService.getUserData(this.channel.members![i]).subscribe(result => {
+          for (let i = 0; i < this.channel?.members!.length; i++) {
+            this.chatService.getUserData(this.channel?.members![i]).pipe(take(1)).subscribe(result => {
               this.members.push(result!);
             })
           }
         })
-      }  
+      }
     })
   }
 
   allChannels() {
     this.allChannelsEvent.emit();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
