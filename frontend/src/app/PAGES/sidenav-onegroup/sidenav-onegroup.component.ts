@@ -24,15 +24,17 @@ export class SidenavOnegroupComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.params.pipe(take(1)).subscribe((params) => {
+    this.route.params.subscribe((params) => {
       if (params) {
         this.subscription = this.chatService.oneChannel(params['id']).subscribe((channel) => {
           this.channel = channel!;
+          const membersArray: User[] = [];
           for (let i = 0; i < this.channel?.members!.length; i++) {
             this.chatService.getUserData(this.channel?.members![i]).pipe(take(1)).subscribe(result => {
-              this.members.push(result!);
+              membersArray.push(result!);
             })
           }
+          this.members = membersArray;
         })
       }
     })

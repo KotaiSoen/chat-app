@@ -94,7 +94,6 @@ export class ChatService {
       if (groupMembers) {
         members = groupMembers;
         if (!members.includes(uid)) {
-          console.log(members);
           members.push(uid);
           this.afs.doc<Group>(`groups/${channelId}`).update({ members: members });
         }

@@ -86,9 +86,10 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.sideNavEvent.emit();
   }
 
-  createNewChannel(name: string, description: string) {
+  createNewChannel(nameOfGroup: string, description: string) {
+    let name = nameOfGroup.toLowerCase();
     const lowerCaseArray = this.channels.map(group => group.name.toLowerCase());
-    if (!lowerCaseArray.includes(name.toLowerCase())) {
+    if (!lowerCaseArray.includes(name)) {
       if (name !== '' && description !== '') {
         this.authService.getCurrentUser().then(result => {
           const uid = result!.uid;
